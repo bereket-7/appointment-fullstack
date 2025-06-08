@@ -1,5 +1,80 @@
-# Vue 3 + TypeScript + Vite
+# 🛠️ Appointment Frontend
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+A modern, high-performance frontend built with **Vue 3**, **TypeScript**, **Vite**, and **Tailwind CSS**.
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+---
+
+## 🚀 Features
+
+- ⚡️ **Vite** – Blazing fast dev/build tool
+- 🔧 **TypeScript** – Type-safe development experience
+- 🧩 **Vue 3** – Composition API & `<script setup>` for clean component logic
+- 🎨 **Tailwind CSS** – Utility-first styling framework
+- 📁 **Modular Architecture** – Organized with `@` alias for clean imports
+
+---
+
+## 📦 Project Setup
+
+```bash
+# Install dependencies
+npm install
+```
+
+---
+
+## 💻 Development
+
+```bash
+npm run dev
+```
+
+Runs the app locally at [http://localhost:5173](http://localhost:5173)
+
+---
+
+## 🏗 Build for Production
+
+```bash
+npm run build
+```
+
+---
+
+## 🔍 Preview Production Build
+
+```bash
+npm run preview
+```
+
+---
+
+## 📁 Project Structure
+
+```
+src/
+├── assets/           # Static assets like Tailwind CSS
+├── components/       # Vue components
+│   └── ui/           # UI-specific components
+├── views/            # Page-level views
+├── router/           # Vue Router setup
+├── store/            # Pinia stores
+├── App.vue
+├── main.ts
+```
+
+---
+
+## 🧠 Learn More
+
+- [Vue 3 Documentation](https://vuejs.org/)
+- [Vue `<script setup>` Guide](https://vuejs.org/guide/extras/composition-api-faq.html#what-is-script-setup)
+- [TypeScript in Vue](https://vuejs.org/guide/typescript/overview.html)
+- [Vite Docs](https://vitejs.dev/)
+- [Tailwind CSS Docs](https://tailwindcss.com/docs)
+
+---
+
+## ✨ Author
+
+Made by **Bereket**
