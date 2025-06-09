@@ -1,19 +1,24 @@
-import { onMounted, ref } from 'vue'
+import { ref, watchEffect } from "vue"
 
-const theme = ref<'light' | 'dark'>('light')
+const isDark = ref(
+  localStorage.getItem("theme") === "dark" ||
+  (!localStorage.getItem("theme") && window.matchMedia("(prefers-color-scheme: dark)").matches)
+)
 
-export function useTheme() {
-  const toggleTheme = () => {
-    theme.value = theme.value === 'dark' ? 'light' : 'dark'
-    document.documentElement.classList.toggle('dark', theme.value === 'dark')
-    localStorage.setItem('theme', theme.value)
+watchEffect(() => {
+  const root = document.documentElement
+  if (isDark.value) {
+    root.classList.add("dark")
+    localStorage.setItem("theme", "dark")
+  } else {
+    root.classList.remove("dark")
+    localStorage.setItem("theme", "light")
   }
+})
 
-  onMounted(() => {
-    const saved = localStorage.getItem('theme')
-    theme.value = saved === 'dark' ? 'dark' : 'light'
-    document.documentElement.classList.toggle('dark', theme.value === 'dark')
-  })
-
-  return { theme, toggleTheme }
+export function useDarkMode() {
+  return {
+    isDark,
+    toggle: () => (isDark.value = !isDark.value),
+  }
 }
