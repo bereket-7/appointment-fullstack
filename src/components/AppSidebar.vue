@@ -12,6 +12,8 @@ import {
   SidebarFooter,
 } from "@/components/ui/sidebar"
 
+import { ref } from 'vue'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@/components/ui/dropdown-menu'
 import { useRoute, useRouter } from 'vue-router'
 import { Home, Inbox, User, Calendar, Search, Settings, LogOut } from "lucide-vue-next"
@@ -19,6 +21,17 @@ import { Home, Inbox, User, Calendar, Search, Settings, LogOut } from "lucide-vu
 const route = useRoute()
 const router = useRouter()
 
+const companies = [
+  { id: '1', name: 'Acme Corp' },
+  { id: '2', name: 'Globex Inc' },
+  { id: '3', name: 'Initech LLC' },
+]
+const selectedCompanyId = ref(companies[0].id)
+
+function handleCompanyChange(value: string) {
+  selectedCompanyId.value = value
+  // You can emit, store, or fetch company-specific data here.
+}
 function handleLogout() {
   // Add real logout logic here (e.g., clear auth and redirect)
   router.push('/login')
@@ -36,6 +49,25 @@ const items = [
 
 <template>
   <Sidebar class="h-screen border-r">
+
+        <!-- Sidebar Header with Company Switcher -->
+    <div class="p-4 border-b">
+      <label class="block text-xs text-muted-foreground mb-1">Company</label>
+      <Select :model-value="selectedCompanyId" @update:model-value="handleCompanyChange">
+        <SelectTrigger class="w-full">
+          <SelectValue :placeholder="'Select company'" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem
+            v-for="company in companies"
+            :key="company.id"
+            :value="company.id"
+          >
+            {{ company.name }}
+          </SelectItem>
+        </SelectContent>
+      </Select>
+    </div>
 
     <!-- Sidebar Content -->
     <SidebarContent>
