@@ -1,13 +1,3 @@
-<!-- <template>
-  <DashboardLayout>
-  </DashboardLayout>
-</template>
-
-<script setup>
-import DashboardLayout from '@/layouts/DashboardLayout.vue'
-</script> -->
-
-<!-- src/views/DashboardHome.vue -->
 <script setup lang="ts">
 </script>
 
