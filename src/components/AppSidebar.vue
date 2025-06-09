@@ -9,12 +9,20 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
+  SidebarFooter,
 } from "@/components/ui/sidebar"
 
-import { useRoute } from 'vue-router'
-import { Home, Inbox, User, Calendar, Search, Settings } from "lucide-vue-next"
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@/components/ui/dropdown-menu'
+import { useRoute, useRouter } from 'vue-router'
+import { Home, Inbox, User, Calendar, Search, Settings, LogOut } from "lucide-vue-next"
 
 const route = useRoute()
+const router = useRouter()
+
+function handleLogout() {
+  // Add real logout logic here (e.g., clear auth and redirect)
+  router.push('/login')
+}
 
 const items = [
   { title: "Home", url: "/", icon: Home },
@@ -28,6 +36,8 @@ const items = [
 
 <template>
   <Sidebar class="h-screen border-r">
+
+    <!-- Sidebar Content -->
     <SidebarContent>
       <SidebarGroup>
         <SidebarGroupLabel>Appointment Management</SidebarGroupLabel>
@@ -49,5 +59,37 @@ const items = [
         </SidebarGroupContent>
       </SidebarGroup>
     </SidebarContent>
+
+
+       <!-- Footer -->
+    <SidebarFooter class="px-4 py-3 border-t">
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <button class="flex w-full items-center justify-between rounded-md px-2 py-2 hover:bg-muted">
+            <div class="flex items-center gap-2">
+              <UserIcon class="w-5 h-5" />
+              <span class="text-sm font-medium">Admin</span>
+            </div>
+            <ChevronDownIcon class="w-4 h-4" />
+          </button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="start">
+          <DropdownMenuItem @click="handleLogout">
+            <LogOut class="w-4 h-4 mr-2 text-destructive" /> Logout
+          </DropdownMenuItem>
+          <DropdownMenuItem @click="handleLogout">
+            <span class="font-medium text-foreground">Account</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <div class="flex flex-col gap-0.5">
+            <span class="font-medium text-foreground">Admin</span>
+            <span class="text-xs">v1.0.0 • Stable</span>
+            <span class="text-xs text-muted-foreground">© 2025 Appointment Management</span>
+          </div>
+          </DropdownMenuItem>
+          
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </SidebarFooter>
   </Sidebar>
 </template>
