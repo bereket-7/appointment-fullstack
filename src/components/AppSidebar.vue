@@ -9,6 +9,8 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
+  SidebarMenuSub,
+  SidebarMenuSubItem,
   SidebarFooter,
 } from "@/components/ui/sidebar"
 
@@ -17,7 +19,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@/components/ui/dropdown-menu'
 import { useRoute, useRouter } from 'vue-router'
 import { Home, Inbox, User, Calendar, Search, Settings, LogOut } from "lucide-vue-next"
-import { CreditCard, DollarSign } from "lucide-vue-next"
+import { CreditCard, DollarSign, FileText } from "lucide-vue-next"
+
 import {
   Collapsible,
   CollapsibleContent,
@@ -27,13 +30,36 @@ import {
 const route = useRoute()
 const router = useRouter()
 
-
-const isFinanceOpen = ref(true)
-
-const financeItems = [
-  { title: "Payments", url: "/payments", icon: CreditCard },
-  { title: "Reports", url: "/financial-reports", icon: DollarSign }
+const financialMenu = [
+  {
+    key: "payments",
+    title: "Payments",
+    icon: CreditCard,
+    children: [
+      { title: "All Payments", url: "/payments" },
+      { title: "Pending Payments", url: "/payments/pending" },
+    ],
+  },
+  {
+    key: "reports",
+    title: "Reports",
+    icon: DollarSign,
+    children: [
+      { title: "Financial Report", url: "/financial/reports" },
+      { title: "Export CSV", url: "/financial/export" },
+    ],
+  },
+  {
+    key: "invoices",
+    title: "Invoices",
+    icon: FileText,
+    children: [
+      { title: "All Invoices", url: "/invoices" },
+      { title: "Overdue", url: "/invoices/overdue" },
+    ],
+  },
 ]
+
 const companies = [
   { id: '1', name: 'Acme Corp' },
   { id: '2', name: 'Globex Inc' },
@@ -44,6 +70,15 @@ const selectedCompanyId = ref(companies[0].id)
 function handleCompanyChange(value: string) {
   selectedCompanyId.value = value
   // You can emit, store, or fetch company-specific data here.
+}
+const submenuOpenMap = ref<Record<string, boolean>>({
+  payments: false,
+  reports: false,
+  invoices: false,
+})
+
+function toggleSubmenu(key: string) {
+  submenuOpenMap.value[key] = !submenuOpenMap.value[key]
 }
 
 const items = [
@@ -59,7 +94,7 @@ const items = [
 <template>
   <Sidebar class="h-screen border-r">
 
-        <!-- Sidebar Header with Company Switcher -->
+    <!-- Sidebar Header with Company Switcher -->
     <div class="p-4 border-b">
       <label class="block text-xs text-muted-foreground mb-1">Company</label>
       <Select :model-value="selectedCompanyId" @update:model-value="handleCompanyChange">
@@ -101,7 +136,6 @@ const items = [
         </SidebarGroupContent>
       </SidebarGroup>
 
-
       <SidebarGroup>
         <SidebarGroupLabel>Events</SidebarGroupLabel>
         <SidebarGroupContent>
@@ -122,10 +156,42 @@ const items = [
         </SidebarGroupContent>
       </SidebarGroup>
 
+      <SidebarGroup>
+        <SidebarGroupLabel>Payment & Financial</SidebarGroupLabel>
+        <SidebarGroupContent>
+          <SidebarMenu>
+            <SidebarMenuItem v-for="item in financialMenu" :key="item.key">
+              <SidebarMenuSub v-model:open="submenuOpenMap[item.key]">
+                <SidebarMenuButton class="flex items-center gap-2 w-full">
+                  <component :is="item.icon" class="w-5 h-5" />
+                  <span class="text-sm">{{ item.title }}</span>
+                </SidebarMenuButton>
+
+                <!-- Submenu items -->
+                <template #content>
+                  <SidebarMenuSubItem
+                    v-for="sub in item.children"
+                    :key="sub.title"
+                    asChild
+                  >
+                    <RouterLink
+                      :to="sub.url"
+                      class="flex items-center gap-2 px-3 py-1.5 rounded-md text-sm transition-colors"
+                      :class="route.path === sub.url ? 'bg-muted text-primary' : 'hover:bg-muted'"
+                    >
+                      {{ sub.title }}
+                    </RouterLink>
+                  </SidebarMenuSubItem>
+                </template>
+              </SidebarMenuSub>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarGroupContent>
+      </SidebarGroup>
 
     </SidebarContent>
 
-
+    <!-- Sidebar Footer with User Dropdown -->
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
