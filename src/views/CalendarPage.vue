@@ -1,6 +1,8 @@
 <template>
-  <h1>Calendars Page</h1>
+  <NotFound />
 </template>
 
 <script setup lang="ts">
+import NotFound from '@/components/common/NotFound.vue';
+
 </script>
