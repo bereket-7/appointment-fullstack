@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import StatWidget from '@/components/dashboard/StatWidget.vue';
+
 </script>
 
 <template>
@@ -8,4 +10,5 @@
       This is the main dashboard view. Use the sidebar to navigate through the app.
     </p>
   </div>
+    <StatWidget />
 </template>
