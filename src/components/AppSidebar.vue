@@ -17,10 +17,23 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@/components/ui/dropdown-menu'
 import { useRoute, useRouter } from 'vue-router'
 import { Home, Inbox, User, Calendar, Search, Settings, LogOut } from "lucide-vue-next"
+import { CreditCard, DollarSign } from "lucide-vue-next"
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger
+} from "@/components/ui/collapsible"
 
 const route = useRoute()
 const router = useRouter()
 
+
+const isFinanceOpen = ref(true)
+
+const financeItems = [
+  { title: "Payments", url: "/payments", icon: CreditCard },
+  { title: "Reports", url: "/financial-reports", icon: DollarSign }
+]
 const companies = [
   { id: '1', name: 'Acme Corp' },
   { id: '2', name: 'Globex Inc' },
@@ -31,10 +44,6 @@ const selectedCompanyId = ref(companies[0].id)
 function handleCompanyChange(value: string) {
   selectedCompanyId.value = value
   // You can emit, store, or fetch company-specific data here.
-}
-function handleLogout() {
-  // Add real logout logic here (e.g., clear auth and redirect)
-  router.push('/login')
 }
 
 const items = [
@@ -71,8 +80,9 @@ const items = [
 
     <!-- Sidebar Content -->
     <SidebarContent>
+
       <SidebarGroup>
-        <SidebarGroupLabel>Appointment Management</SidebarGroupLabel>
+        <SidebarGroupLabel>Management</SidebarGroupLabel>
         <SidebarGroupContent>
           <SidebarMenu>
             <SidebarMenuItem v-for="item in items" :key="item.title">
@@ -90,38 +100,60 @@ const items = [
           </SidebarMenu>
         </SidebarGroupContent>
       </SidebarGroup>
+
+
+      <SidebarGroup>
+        <SidebarGroupLabel>Events</SidebarGroupLabel>
+        <SidebarGroupContent>
+          <SidebarMenu>
+            <SidebarMenuItem v-for="item in items" :key="item.title">
+              <SidebarMenuButton asChild>
+                <RouterLink
+                  :to="item.url"
+                  class="flex items-center gap-2 px-3 py-2 rounded-md transition-colors"
+                  :class="route.path === item.url ? 'bg-muted text-primary' : 'hover:bg-muted'"
+                >
+                  <component :is="item.icon" class="w-5 h-5" />
+                  <span class="text-sm">{{ item.title }}</span>
+                </RouterLink>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarGroupContent>
+      </SidebarGroup>
+
+
     </SidebarContent>
 
 
-       <!-- Footer -->
-    <SidebarFooter class="px-4 py-3 border-t">
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <button class="flex w-full items-center justify-between rounded-md px-2 py-2 hover:bg-muted">
-            <div class="flex items-center gap-2">
-              <UserIcon class="w-5 h-5" />
-              <span class="text-sm font-medium">Admin</span>
-            </div>
-            <ChevronDownIcon class="w-4 h-4" />
-          </button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="start">
-          <DropdownMenuItem @click="handleLogout">
-            <LogOut class="w-4 h-4 mr-2 text-destructive" /> Logout
-          </DropdownMenuItem>
-          <DropdownMenuItem @click="handleLogout">
-            <span class="font-medium text-foreground">Account</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <div class="flex flex-col gap-0.5">
-            <span class="font-medium text-foreground">Admin</span>
-            <span class="text-xs">v1.0.0 • Stable</span>
-            <span class="text-xs text-muted-foreground">© 2025 Appointment Management</span>
-          </div>
-          </DropdownMenuItem>
-          
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </SidebarFooter>
+      <SidebarFooter>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <SidebarMenuButton>
+                  <User2 /> Username
+                  <ChevronUp class="ml-auto" />
+                </SidebarMenuButton>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                side="top"
+                class="w-[--reka-popper-anchor-width]"
+              >
+                <DropdownMenuItem>
+                  <span>Account</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <span>Billing</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <span>Sign out</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
+
   </Sidebar>
 </template>
