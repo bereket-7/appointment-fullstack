@@ -75,6 +75,8 @@ src/
 
 ---
 
+📦 [Backend Setup Instructions](server/README.server.md)
+
 ## ✨ Author
 
 Made by **Bereket**

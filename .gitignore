@@ -1,24 +1,52 @@
-# Logs
-logs
+# --- GLOBAL ---
+.DS_Store
+Thumbs.db
+.env
+.env.*.local
+*.local
+
+# --- NODE ---
+node_modules/
+dist/
+dist-ssr/
+build/
+.nyc_output/
+coverage/
 *.log
+logs/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# --- FRONTEND (Vue, Vite) ---
+client/.vite/
+client/.nuxt/
+client/.output/
+client/.cache/
+client/public/assets/
 
-# Editor directories and files
+# --- BACKEND (NestJS + MongoDB) ---
+server/.env
+
+# Optional MongoDB Docker volume mounts or temp data
+mongo/data/
+mongo/.env
+
+# --- OS Files ---
+*.swp
+*.swo
+*.pid
+*.seed
+*.pid.lock
+
+# --- IDEs ---
 .vscode/*
 !.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+.idea/
+*.sublime-workspace
+*.code-workspace
+
+# --- Optional Docker ---
+docker-compose.override.yml
