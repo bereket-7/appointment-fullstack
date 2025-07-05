@@ -29,4 +29,20 @@ export class AuthService {
       user,
     };
   }
+
+  async forgotPassword(email: string): Promise<string> {
+    const user = await this.userService.findByEmail(email);
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    const resetToken = this.jwtService.sign(
+      { sub: user._id, email: user.email },
+      { expiresIn: '15m' },
+    );
+
+    console.log(`Password reset token for ${email}: ${resetToken}`);
+
+    return 'Password reset link has been sent (mocked)';
+  }
 }

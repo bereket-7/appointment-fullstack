@@ -12,6 +12,10 @@ input CreateUserInput {
   username: String!
 }
 
+input ForgotPasswordInput {
+  email: String!
+}
+
 input LoginInput {
   email: String!
   password: String!
@@ -23,6 +27,7 @@ type LoginResponse {
 }
 
 type Mutation {
+  forgotPassword(input: ForgotPasswordInput!): String!
   login(input: LoginInput!): LoginResponse!
   register(input: CreateUserInput!): User!
 }
