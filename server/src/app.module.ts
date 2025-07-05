@@ -8,6 +8,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from './user/user.module';
 import { AppResolver } from './app/app.resolver';
 import * as dotenv from 'dotenv';
+import { AuthModule } from './auth/auth.module';
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ dotenv.config();
       playground: true,
     }),
     UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService, AppResolver],
