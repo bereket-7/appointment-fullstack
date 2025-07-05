@@ -5,6 +5,7 @@ import * as bcrypt from 'bcrypt';
 import { CreateUserInput } from './dto/create-user.input';
 import { User } from './user.model';
 import { hashPassword } from '../utils/password.util';
+import { UserDocument } from './user.schema';
 @Injectable()
 export class UserService {
   constructor(@InjectModel('User') private userModel: Model<User>) {}
@@ -19,7 +20,7 @@ export class UserService {
     return this.userModel.find().select('-password').exec();
   }
 
-  async findByEmail(email: string) {
-    return this.userModel.findOne({ email });
+  async findByEmail(email: string): Promise<UserDocument | null> {
+    return this.userModel.findOne({ email }).select('+password');
   }
 }
