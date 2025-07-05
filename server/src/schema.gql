@@ -26,6 +26,7 @@ type User {
   address: String
   email: String!
   firstname: String!
+  id: ID!
   lastname: String!
   phone: String
   username: String!
