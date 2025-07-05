@@ -6,8 +6,26 @@ export class User {
   _id: string;
 
   @Field()
-  username: string;
+  uuid: string;
+
+  @Field()
+  firstname: string;
+
+  @Field()
+  lastname: string;
 
   @Field()
   email: string;
+
+  @Field({ nullable: true })
+  phone?: string;
+
+  @Field({ nullable: true })
+  address?: string;
+
+  @Field()
+  verified: boolean;
+
+  @Field()
+  username: string;
 }
