@@ -5,6 +5,11 @@ export class User {
   @Field(() => ID)
   _id: string;
 
+  @Field(() => ID)
+  get id(): string {
+    return this._id;
+  }
+
   @Field()
   uuid: string;
 
