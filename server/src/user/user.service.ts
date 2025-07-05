@@ -5,7 +5,6 @@ import * as bcrypt from 'bcrypt';
 import { CreateUserInput } from './dto/create-user.input';
 import { User } from './user.model';
 import { hashPassword } from '../utils/password.util';
-
 @Injectable()
 export class UserService {
   constructor(@InjectModel('User') private userModel: Model<User>) {}
@@ -18,5 +17,9 @@ export class UserService {
 
   async findAll(): Promise<User[]> {
     return this.userModel.find().select('-password').exec();
+  }
+
+  async findByEmail(email: string) {
+    return this.userModel.findOne({ email });
   }
 }
